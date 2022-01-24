@@ -21,15 +21,15 @@ def sn():
     print("1. Employee Login ")
     print("2. User Login")
     print("3. Exit")
-    choice=int(input("Enter Your Choice: "))
+    choice=int(input("Enter your choice: "))
     if choice==1:
-        code=int(input("ENTER YOUR USER CODE:"))
+        code=int(input("Enter your User ID: "))
         c1.execute("select user_id from user")
         dat=c1.fetchall()
         hi=list(dat)
         for i in range(len(hi)):
             if hi[i]==code:
-                print("USER ID SUCCESSFULLY FOUND")
+                print("User ID successfully found! Logging in...")
                 
 
 
@@ -39,16 +39,16 @@ def create():
     print("1. User Account")
     print("2. Employee Account")
     print("3. Exit")
-    ch2=int(input("Enter Your Choice:"))
+    ch2=int(input("Enter your choice: "))
     if ch2==1:
         print("User Account Registration")
-        u=input("Enter Your User ID:")
+        u=input("Enter your User ID: ")
         c1.execute("select user_id from user")
         hat=c1.fetchall()
         h2=list(hat)
         for i in range(len(h2)):
             if h2[i]==u:
-                print("USER ID ALREADY EXITS")
+                print("USER ID already exists, please log in.")
 
 
 
@@ -65,23 +65,23 @@ def create():
 
 # FOR CREATING EMPLOYEE ACCOUNT
     elif ch2==2:
-        print("WELCOME TO EMPLOYEE ACCOUNT REGISTRATION")
-        u1=int(input("ENTER A EMPLOYEE ID:"))
+        print("Employee Account Registration")
+        u1=int(input("Enter your Employee ID: "))
         c1.execute("select emp_code from employee")
         hat1=c1.fetchall()
         h21=list(hat1)
         for i in range(len(h21)):
             if h21[i]==u1:
-                print("Employee ID already exists")
+                print("Employee ID already exists, please log in.")
 
 
 
 
             else:
-                n1=input("ENTER YOUR NAME:")
-                c1=input("ENTER YOUR CITY:")
-                z1=int(input("ENTER YOUR PHONE NUMBER:"))
-                d=input("ENTER YOUR DESIGNATION:")
+                n1=input("ENTER YOUR NAME: ")
+                c1=input("ENTER YOUR CITY: ")
+                z1=int(input("ENTER YOUR PHONE NUMBER: "))
+                d=input("ENTER YOUR DESIGNATION: ")
                 query1="insert into employee(emp_code,name,city,phone number,designation) values({},'{}','{}',{},'{}')".format(u1,n1,c1,z1,d)
                 c1.execute(query1)
                 con.commit()
@@ -95,7 +95,7 @@ def create():
 def cont1():
     print("1.CHECK ORDER")
     print("2.EXIT")
-    ch4=int(input("ENTER YOUR CHOICE:"))
+    ch4=int(input("ENTER YOUR CHOICE: "))
 
     if ch4==1:
         order()
@@ -106,7 +106,7 @@ def cont1():
 def cont():
     print("1.CONTINUE SHOPPING")
     print("2.EXIT")
-    ch3=int(input("ENTER YOUR CHOICE:"))
+    ch3=int(input("ENTER YOUR CHOICE: "))
     if ch3==1:
         buy()
     else:
@@ -117,13 +117,13 @@ def cont():
 
 def main():
     print('Welcome to The Shop! ')
-    print("\n==============================================================================\n\n")
+    print("==============================================================================\n\n")
     print('1. Login')
-    print('2.Create Account')
+    print('2. Create Account')
     print('3. delete Account')
     print('4. View Details') # tf is this supposed to do
     print('5. Exit')
-    ch1=print("Select the option you want: ")
+    ch1=int(input("Select the option you want: "))
     if ch1==1:
         sn()
     if ch1==2:

@@ -10,45 +10,31 @@ sql_usrnm = input("MySQL Username: ")
 sql_pw = input("MySQL password: ")
 
 con=c.connect(user=sql_usrnm, password=sql_pw, host="localhost", database="Shop")
-print("connection succeeded!")
 
+c1=con.cursor()
 time.sleep(.5)
 
 utils.cls()
-print(' Welcome to The Shop! ')
-print
-print('1. Login')
-print('2. Crete Account')
-print('3. Delete Account')
-print('4. View Details') # what the heck is this supposed to do?
-print('5. Exit')
-ch1=int(input("Select the option you want:"))
-if ch1==1:
-    sn()
-if ch1==2:
-    create()
 
-
-
-
+#FUNCTION FOR SIGN IN
 def sn():
     print("1. Employee Login ")
     print("2. User Login")
     print("3. Exit")
     choice=int(input("Enter Your Choice: "))
     if choice==1:
-        code=int(input("Enter Your Employee ID:"))
-        pwd=input("Enter Your Password:")
-        c1.execute("select * from employee where emp_code={} and password={}".format(code,pwd))
+        code=int(input("ENTER YOUR USER CODE:"))
+        c1.execute("select user_id from user")
         dat=c1.fetchall()
         hi=list(dat)
+        for i in range(len(hi)):
+            if hi[i]==code:
+                print("USER ID SUCCESSFULLY FOUND")
+                
+
+
         
-
-
-
-
-
-
+#FUNTION FOR CREATING USER ACCOUNT
 def create():
     print("1. User Account")
     print("2. Employee Account")
@@ -75,8 +61,9 @@ def create():
                 con.commit()
                 print("USER CODE SUCCESSFULLY ADDED")
                 cont()
+#END OF USER REGISTRATION
 
-
+# FOR CREATING EMPLOYEE ACCOUNT
     elif ch2==2:
         print("WELCOME TO EMPLOYEE ACCOUNT REGISTRATION")
         u1=int(input("ENTER A EMPLOYEE ID:"))
@@ -100,19 +87,22 @@ def create():
                 con.commit()
                 newEmpCode = c
                 print("EMPLOYEE CODE SUCCESSFULLY ADDED")
-                print("1.CHECK ORDER")
-                print("2.ADD ANOTHER EMPLOYEE")
-                print("3.EXIT")
-                ch4=int(input("ENTER YOUR CHOICE:"))
 
-                if ch4==1:
-                    order()
-                elif ch4==2:
-                    create()
-                else:
-                    break
+                cont1()
+#END OF EMPLOYEE REGISTRATION
 
-#CALLING CONTINUE FUNCTION
+#CALLING CONTINUE FUNCTION(FOR EMPLOYEE)
+def cont1():
+    print("1.CHECK ORDER")
+    print("2.EXIT")
+    ch4=int(input("ENTER YOUR CHOICE:"))
+
+    if ch4==1:
+        order()
+    else:
+        main()
+
+#CALLING CONTINUE FUNCTION(FOR USER)
 def cont():
     print("1.CONTINUE SHOPPING")
     print("2.EXIT")
@@ -124,5 +114,19 @@ def cont():
         print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
         print("==============================================================================")
         main()
-#END OF USER LOGIN
-                  
+
+def main():
+    print('Welcome to The Shop! ')
+    print("\n==============================================================================\n\n")
+    print('1. Login')
+    print('2.Create Account')
+    print('3. delete Account')
+    print('4. View Details') # tf is this supposed to do
+    print('5. Exit')
+    ch1=print("Select the option you want: ")
+    if ch1==1:
+        sn()
+    if ch1==2:
+        create()
+
+main()

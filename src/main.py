@@ -1,3 +1,4 @@
+from logging import root
 import mysql.connector as c
 import datetime
 
@@ -8,25 +9,9 @@ sql_pw = input("MySQL password: ")
 
 con=c.connect(user=sql_usrnm, password=sql_pw, host="localhost", database="EventManagementSystem")
 print("connection succeeded!")
+c1=con.cursor()
 
-
-print('WELECOME TO SSA Electronics Shop Management System ')
-ch=int(input("Press 1 to continue"))
-if ch==1:
-    print('1.SIGN IN')
-    print('2.CREATE ACCOUNT')
-    print('3.DELETE ACCOUNT')
-    print('4.VIEW DETAILS')
-    print('5.EXIT')
-    ch1=print("Select the option you want:")
-    if ch1==1:
-        sn()
-    if ch1==2:
-        create()
-
-
-
-
+#FUNCTION FOR SIGN IN
 def sn():
     print("1.EMPLOYEE LOGIN ")
     print("2.USER LOGIN")
@@ -34,17 +19,17 @@ def sn():
     choice=int(input("ENTER YOUR CHOICE:"))
     if choice==1:
         code=int(input("ENTER YOUR USER CODE:"))
-        pwd=input("ENTER YOUR PASSWORD:")
-        c1.execute("select * from employee where emp_code={} and password={}".format(code,pwd))
+        c1.execute("select user_id from user")
         dat=c1.fetchall()
         hi=list(dat)
+        for i in range(len(hi)):
+            if hi[i]==code:
+                print("USER ID SUCCESSFULLY FOUND")
+                
+
+
         
-
-
-
-
-
-
+#FUNTION FOR CREATING USER ACCOUNT
 def create():
     print("1.USER ACCOUNT")
     print("2.EMPLOYEE ACCCOUNT")
@@ -71,8 +56,9 @@ def create():
                 con.commit()
                 print("USER CODE SUCCESSFULLY ADDED")
                 cont()
+#END OF USER REGISTRATION
 
-
+# FOR CREATING EMPLOYEE ACCOUNT
     elif ch2==2:
         print("WELCOME TO EMPLOYEE ACCOUNT REGISTRATION")
         u1=int(input("ENTER A EMPLOYEE ID:"))
@@ -95,19 +81,22 @@ def create():
                 c1.execute(query1)
                 con.commit()
                 print("EMPLOYEE CODE SUCCESSFULLY ADDED")
-                print("1.CHECK ORDER")
-                print("2.ADD ANOTHER EMPLOYEE")
-                print("3.EXIT")
-                ch4=int(input("ENTER YOUR CHOICE:"))
 
-                if ch4==1:
-                    order()
-                elif ch4==2:
-                    create()
-                else:
-                    break
+                cont1()
+#END OF EMPLOYEE REGISTRATION
 
-#CALLING CONTINUE FUNCTION
+#CALLING CONTINUE FUNCTION(FOR EMPLOYEE)
+def cont1():
+    print("1.CHECK ORDER")
+    print("2.EXIT")
+    ch4=int(input("ENTER YOUR CHOICE:"))
+
+    if ch4==1:
+        order()
+    else:
+        main()
+
+#CALLING CONTINUE FUNCTION(FOR USER)
 def cont():
     print("1.CONTINUE SHOPPING")
     print("2.EXIT")
@@ -119,5 +108,20 @@ def cont():
         print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
         print("==============================================================================")
         main()
-#END OF USER LOGIN
-                  
+
+def main():
+    print('WELECOME TO SSA Electronics Shop Management System ')
+    ch=int(input("Press 1 to continue"))
+    if ch==1:
+        print('1.SIGN IN')
+        print('2.CREATE ACCOUNT')
+        print('3.DELETE ACCOUNT')
+        print('4.VIEW DETAILS')
+        print('5.EXIT')
+        ch1=print("Select the option you want:")
+        if ch1==1:
+            sn()
+        if ch1==2:
+            create()
+
+main()

@@ -1,6 +1,6 @@
-drop database if exists EventManagementSystem;
+drop database if exists Shop;
 create database Shop;
-use EventManagementSystem;
+use Shop;
 
 create table products (
     sr_no varchar(10) primary key not null,
@@ -19,4 +19,12 @@ create table user (
     city tinytext not null,
     phone_number bigint not null,
     item_bought int not null
+);
+
+create table employees (
+    emp_code varchar(5) primary key not null,
+    name tinytext not null,
+    city tinytext not null,
+    phone_number bigint not null,
+    designation tinytext not null
 )

@@ -9,14 +9,15 @@ print("Logging into the database...")
 sql_usrnm = input("MySQL Username: ")
 sql_pw = input("MySQL password: ")
 
-con=c.connect(user=sql_usrnm, password=sql_pw, host="localhost", database="Shop")
+con = c.connect(user=sql_usrnm, password=sql_pw, host="localhost", database="Shop")
+c1 = con.cursor()
 
-c1=con.cursor()
-time.sleep(.5)
+print("Successfully logged in!")
+time.sleep(.69)
 
 utils.cls()
 
-#FUNCTION FOR SIGN IN
+# function for logging in
 def sn():
     print("1. Employee Login ")
     print("2. User Login")
@@ -34,7 +35,7 @@ def sn():
 
 
         
-#FUNTION FOR CREATING USER ACCOUNT
+# function for user account generation
 def create():
     print("1. User Account")
     print("2. Employee Account")
@@ -61,9 +62,9 @@ def create():
                 con.commit()
                 print("USER CODE SUCCESSFULLY ADDED")
                 cont()
-#END OF USER REGISTRATION
+# end of user account generation
 
-# FOR CREATING EMPLOYEE ACCOUNT
+# function for employee account generation
     elif ch2==2:
         print("Employee Account Registration")
         u1=int(input("Enter your Employee ID: "))
@@ -89,29 +90,29 @@ def create():
                 print("EMPLOYEE CODE SUCCESSFULLY ADDED")
 
                 cont1()
-#END OF EMPLOYEE REGISTRATION
+# end of employee account generation
 
-#CALLING CONTINUE FUNCTION(FOR EMPLOYEE)
+# you wanna continue? (for employees)
 def cont1():
-    print("1.CHECK ORDER")
-    print("2.EXIT")
-    ch4=int(input("ENTER YOUR CHOICE: "))
+    print("1. Check orders")
+    print("2. Exit")
+    ch4=int(input("Enter your choice: "))
 
     if ch4==1:
         order()
     else:
         main()
 
-#CALLING CONTINUE FUNCTION(FOR USER)
+# you wanna continue? (for users)
 def cont():
-    print("1.CONTINUE SHOPPING")
-    print("2.EXIT")
-    ch3=int(input("ENTER YOUR CHOICE: "))
+    print("1. Continue shopping")
+    print("2. Exist")
+    ch3=int(input("Enter your choice: "))
     if ch3==1:
         buy()
     else:
-        print("Thank you")
-        print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
+        print("==============================================================================")
+        print("Thanks for coming to The Shop! ")
         print("==============================================================================")
         main()
 

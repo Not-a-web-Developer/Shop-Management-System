@@ -223,6 +223,38 @@ def delt():
         main()
 
 
+def buy():
+    print("WELCOME TO BUYING SECTION")
+    print("HERE ARE COMPANIES OF MOBILE PHONES AVAILABLE:")
+    c1.execute("select company from products")
+    hat4=c1.fetchall()
+    b=list(hat4)
+    print(b)
+    b1=input("ENTER YOUR PREFERRED COMPANY:")
+    for i in range(len(b)):
+        if b[i]==b1:
+            print("HERE IS THE LIST OF VARIOUS MOBILE PHONE AVAILABLE OF THIS COMPANY:")
+            c1.execute("select phone,price from products where company=='b1'")     #DOUBT
+            hat5=c1.fetchall()
+            a=list(hat5)
+                
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def main():
     print('WELECOME TO SSA Electronics Shop Management System ')
     ch=int(input("Press 1 to continue"))

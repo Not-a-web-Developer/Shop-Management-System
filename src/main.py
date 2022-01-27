@@ -234,12 +234,18 @@ def buy():
     for i in range(len(b)):
         if b[i]==b1:
             print("HERE IS THE LIST OF VARIOUS MOBILE PHONE AVAILABLE OF THIS COMPANY:")
-            c1.execute("select phone,price from products where company=='b1'")     #DOUBT
+            c1.execute("select sr_no,phone,price from products where company='b1'")     #DOUBT
             hat5=c1.fetchall()
             a=list(hat5)
+            print(a)
+            a1=int(input("SELECT THE PHONE YOU LIKED FOR ITS CONFIGURATION:"))
+
+
+
                 
 
     
+
 
 
 

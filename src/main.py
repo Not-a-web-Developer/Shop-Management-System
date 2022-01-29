@@ -144,7 +144,7 @@ def cont():
     if ch3==1:
         buy()
     else:
-        print("Thank you")
+        print("THANK YOU")
         print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
         print("==============================================================================")
         main()
@@ -234,31 +234,70 @@ def buy():
     for i in range(len(b)):
         if b[i]==b1:
             print("HERE IS THE LIST OF VARIOUS MOBILE PHONE AVAILABLE OF THIS COMPANY:")
-            c1.execute("select sr_no,phone,price from products where company='b1'")     #DOUBT
+            st="select sr_no,phone,price from products where company='%s'" %('b1')
+            c1.execute(st)     #DOUBT
             hat5=c1.fetchall()
             a=list(hat5)
             print(a)
             a1=int(input("SELECT THE PHONE YOU LIKED FOR ITS CONFIGURATION:"))
+            for i in range(len(a1)):
+                if a1[i][0]==a1:
+                    print("THE CONFIGURATIONS ARE:")
+                    c1.execute("select * from products where sr_no='a1'")
+                    hat5=c1.fetchall()
+                    a2=list(hat5)
+                    z1=print("PHONE:",a2[2])
+                    z2=print("PRICE:",a2[3])
+                    z3=print("ITS CONFIGURATION ARE:",a2[4])
+                    a4=input("DO YOU WANT TO BUY THIS PHONE(Y/N)?:")
+                    if a4=="y" or "Y":
+                        query2="insert into order(sr_no,company,phone,price,config) values({},'{}','{}',{},'{})".format(a1,b1,z1,z2,z3)
+                        c1.execute(query2)
+                        con.commit()
+                        print("TRANSACTION DONE SUCCESSFULLY")
+                        print("CONGRATULATIONS THE PHONE IS YPURS!")
+                        a6=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")
+                        if a6=="y" or "Y":
+                            cont2()
+                        else:   
+                            print("THANK YOU")
+                            print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
+                            print("==============================================================================")
+                            main()
 
+                    else:
+                        a5=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")
+                        if a5=="y" or "Y":
+                            cont2()                               
+                        else:
+                            print("THANK YOU")
+                            print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
+                            print("==============================================================================")
+                            main()
 
 
                 
+                else:
+                    print("NO SUCH SR_NO")
+                    print("TRY AGAIN")
+                    cont2()
 
     
+        else:
+            print("SORRY THE GIVEN COMPANY IS NOT IN OUR STORE")
+            a7=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")
+            if a7=="y" or "Y":
+                cont2()
+            else:
+                print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
+                print("==============================================================================")
+                main()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+                
+def cont2():
+    print("TAKING YOU TO BUYING SECTION....")
+    buy()
 
 
 def main():

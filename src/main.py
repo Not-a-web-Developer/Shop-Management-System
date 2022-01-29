@@ -27,8 +27,20 @@ def sn():
         for i in range(len(hi)):
             if hi[i]==code:
                 print("USER ID SUCCESSFULLY FOUND")
-                print("TAKING YOU TO PRODUCTS SECTION...")
-                buy()
+                code1=input("ENTER YOUR PASSWORD:")
+                c1.execute("select pwd from user")
+                dat10=c1.fetchall()
+                hj=list(dat10)
+                for i in range(len(hj)):
+                    if hi[i]==code1:
+                        print("ACCOUNT ACCESSED")
+                        print("TAKING YOU TO PRODUCTS SECTION...")
+                        buy()
+                    
+                    else:
+                        print("INCORRECT PASSWORD")
+                        print("TRY AGAIN")
+                        main()
             
             else:
                 print("NO SUCH USER ID FOUND")
@@ -55,12 +67,12 @@ def sn():
                     
                     else:
                         print("TRY AGAIN")
-                        sn()        #DOUBT!!!
+                        main()        #DOUBT!!!
 
 
             else:
                 print("NO SUCH ID FOUND")
-                sn()            
+                main()            
                 
 
 
@@ -233,7 +245,7 @@ def buy():
     for i in range(len(b)):
         if b[i]==b1:
             print("HERE IS THE LIST OF VARIOUS MOBILE PHONE AVAILABLE OF THIS COMPANY:")
-            st="select product_id,phone,price from products where company='%s'" %('b1')
+            st="select product_id,phone,price from products where company='{}'".format(b1)
             c1.execute(st)     #DOUBT
             hat5=c1.fetchall()
             a=list(hat5)
@@ -242,7 +254,7 @@ def buy():
             for i in range(len(a1)):
                 if a1[i][0]==a1:
                     print("THE CONFIGURATIONS ARE:")
-                    c1.execute("select product_id,company,phone,price,config from products where sr_no='a1'")
+                    c1.execute("select product_id,company,phone,price,config from products where sr_no={}".format(a1))
                     hat5=c1.fetchall()
                     a2=list(hat5)
                     z1=print("PHONE:",a2[2])
@@ -301,7 +313,69 @@ def cont2():
 
 
 def order():
-    print("WELCOME TO THE BILLING SECTION")
+    print("WELCOME TO THE SECTION")
+    p1=int(input("ENTER THE PRODUCT ID:"))
+    c1.execute("select product_id from order")
+    t1=c1.fetchall()
+    u1=list(t1)
+    for i in range(len(u1)):
+        if u1[i]==p1:
+            c1.execute("delete from order where product_id='{}'".format(p1))
+            con.commit()
+            c1.execute("select product_no,qty from products")
+            t2=c1.fetchall()
+            u2=list(t2)
+
+
+
+def details():
+    print("1.USER ACCOUNT")
+    print("2.EMPLOYEE ACCOUNT")
+    print("3.EXIT")
+    ch10=int(input("ENTER YOUR CHOICE:"))
+    if ch10==1:
+        v1=int(input("ENTER YOUR USER ID:"))
+        c1.execute("select user_id from user")
+        x1=c1.fetchall()
+        y1=list(x1)
+        for i in range(len(y1)):
+            if y1[i]==v1:
+                v2=input("ENTER YOUR PASSWORD:")
+                c1.execute("select pwd from user")
+                x2=c1.fetchall()
+                y2=list(x2)
+                for i in range(len(y2)):
+                    if y2[i]==v2:
+                        print("ACCOUNT ACCESSED!")
+                        print("HERE ARE THE DETAILS OF YOUR ACCOUNT")
+                        c1.execute("select user_id,pwd,name,city,phone_number,item_bought where user_id={}".format(v1))
+                        x3=c1.fetchall()
+                        y3=list(x3)
+                        print("USER ID:",y3[0])
+                        print("PASSWORD:",y3[1])
+                        print("NAME",y3[2])
+                        print("CITY",y3[3])
+                        print("PHONE NUMBER",y3[4])
+                        print("ITEM BOUGHT",y3[5])
+                        v3=input("DO YOU WANT TO CHANGE ANY OF YOUR DETAILS(EXCEPT ITEM BOUGHT)(Y/N)?")
+                        if v3=="y" or "Y":
+                            z4=input("WHICH DETAIL YOU WANT TO CHANGE?")
+
+                            
+
+
+
+
+
+                        else:
+                            print("THANK YOU")
+                            print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
+                            print("==============================================================================")
+                            main()
+
+
+
+
 
 
 def main():

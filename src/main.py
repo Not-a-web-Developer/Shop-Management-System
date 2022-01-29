@@ -28,7 +28,6 @@ def sn():
             if hi[i]==code:
                 print("USER ID SUCCESSFULLY FOUND")
                 print("TAKING YOU TO PRODUCTS SECTION...")
-                print("HERE IS THE LIST OF PRODUCTS...")
                 buy()
             
             else:
@@ -234,7 +233,7 @@ def buy():
     for i in range(len(b)):
         if b[i]==b1:
             print("HERE IS THE LIST OF VARIOUS MOBILE PHONE AVAILABLE OF THIS COMPANY:")
-            st="select sr_no,phone,price from products where company='%s'" %('b1')
+            st="select product_id,phone,price from products where company='%s'" %('b1')
             c1.execute(st)     #DOUBT
             hat5=c1.fetchall()
             a=list(hat5)
@@ -243,7 +242,7 @@ def buy():
             for i in range(len(a1)):
                 if a1[i][0]==a1:
                     print("THE CONFIGURATIONS ARE:")
-                    c1.execute("select * from products where sr_no='a1'")
+                    c1.execute("select product_id,company,phone,price,config from products where sr_no='a1'")
                     hat5=c1.fetchall()
                     a2=list(hat5)
                     z1=print("PHONE:",a2[2])
@@ -251,11 +250,11 @@ def buy():
                     z3=print("ITS CONFIGURATION ARE:",a2[4])
                     a4=input("DO YOU WANT TO BUY THIS PHONE(Y/N)?:")
                     if a4=="y" or "Y":
-                        query2="insert into order(sr_no,company,phone,price,config) values({},'{}','{}',{},'{})".format(a1,b1,z1,z2,z3)
+                        query2="insert into order(product_id,company,phone,price,config) values({},'{}','{}',{},'{})".format(a1,b1,z1,z2,z3)
                         c1.execute(query2)
                         con.commit()
                         print("TRANSACTION DONE SUCCESSFULLY")
-                        print("CONGRATULATIONS THE PHONE IS YPURS!")
+                        print("CONGRATULATIONS THE PHONE IS YOURS!")
                         a6=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")
                         if a6=="y" or "Y":
                             cont2()
@@ -298,6 +297,11 @@ def buy():
 def cont2():
     print("TAKING YOU TO BUYING SECTION....")
     buy()
+
+
+
+def order():
+    print("WELCOME TO THE BILLING SECTION")
 
 
 def main():

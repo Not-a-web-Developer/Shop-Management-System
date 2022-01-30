@@ -389,7 +389,10 @@ def details():
                             z4=input("WHICH DETAIL YOU WANT TO CHANGE?")
                             if z4==2:
                                 g1=input("ENTER YOUR NEW PASSWORD:")
-                                c1.execute("insert into user(pwd) where user_id={v1} values('{}')".format(g1))         #DOUBT
+                                query5="update user set pwd= %s where user_id= %s"
+                                val=(v1,g1)
+                                c1.execute(query5,val)                       #DOUBT
+                                con.commit()
 
                                 
 

@@ -1,11 +1,21 @@
-import os, time
+import mysql.connector as c
 
-print("Illum vero sed sit. Molestiae eaque autem libero est saepe occaecati aut sed. Non sit ullam vel. Iste est ipsam optio est harum qui quia. Asperiores repudiandae hic asperiores sunt non aperiam est autem. Magni odit iure sit blanditiis ad et ea adipisci. Delectus est veniam excepturi iure quia qui possimus. Aut excepturi voluptas unde. Ducimus laborum repellendus rerum ea magnam. Non odio quod eius deleniti officia dolorem eum. Possimus nihil maxime sapiente cumque odit minima reprehenderit qui. Non eveniet in qui quia ratione ut numquam iste. Rem tempore veniam qui. Optio ut architecto facilis. Et iusto natus placeat illo. Est earum quos amet qui qui repellat. Ea ut aut omnis maxime est. Illo nobis ea non et. Laboriosam voluptatem explicabo enim et dolorum aut nulla. Laborum iusto in et perferendis qui. Dolore sunt in ut.")
+print("Initialising app...")
+print("Logging into the database...")
+sql_usrnm = input("MySQL Username: ")
+sql_pw = input("MySQL password: ")
 
-time.sleep(2)
+con=c.connect(user=sql_usrnm, password=sql_pw, host="localhost", database="testdb")
+print("connection succeeded!")
+c1=con.cursor()
 
-os.system("\x1b[2J")
-
-time.sleep(2)
-
-print ("screen cleared!")
+c1.execute("select sr_no from lol")
+d = c1.fetchall()
+inputlol = int(input("enter a number lol: "))
+lst = list(d)
+for i in range(0, len(lst)):
+    print("the database says ", lst[i])
+    if lst[i] == (inputlol,):
+        print("your inpuut exists in the database!")
+    else:
+        print("fuck you you don't exist in the db lol")

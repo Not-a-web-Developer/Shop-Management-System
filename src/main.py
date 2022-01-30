@@ -1,5 +1,5 @@
 from logging import root
-import mysql.connector as c
+import mysql.connector
 import datetime
 import time
 import utils
@@ -9,43 +9,45 @@ print("Logging into the database...")
 sql_usrnm = input("MySQL Username: ")
 sql_pw = input("MySQL password: ")
 
-con=c.connect(user=sql_usrnm, password=sql_pw, host="localhost", database="EventManagementSystem")
+con=mysql.connector.connect(user=sql_usrnm, password=sql_pw, host="localhost", database="Shop")
 print("connection succeeded!")
 c1=con.cursor()
 
 #FUNCTION FOR SIGN IN
 def sn():
-    print("1.EMPLOYEE LOGIN ")
-    print("2.USER LOGIN")
-    print("3.EXIT")
+    print("1. User login ")
+    print("2. Employee login")
+    print("3. EXIT")
     choice=int(input("ENTER YOUR CHOICE:"))
     if choice==1:
-        code=int(input("ENTER YOUR USER ID:"))
         c1.execute("select user_id from user")
         dat=c1.fetchall()
+        code=int(input("ENTER YOUR USER ID:"))
         hi=list(dat)
-        for i in range(len(hi)):
-            if hi[i]==code:
+        for i in range(0, len(hi)):
+            if hi[i]==(code,):
                 print("USER ID SUCCESSFULLY FOUND")
-                code1=input("ENTER YOUR PASSWORD:")
-                c1.execute("select pwd from user")
+                c1.execute("select pwd from user where user_id = %s", (code,))
                 dat10=c1.fetchall()
+                code1=input("ENTER YOUR PASSWORD:")
                 hj=list(dat10)
                 for i in range(len(hj)):
-                    if hi[i]==code1:
+                    if hj[i]==(code1,):
                         print("ACCOUNT ACCESSED")
                         print("TAKING YOU TO PRODUCTS SECTION...")
                         buy()
                     
                     else:
-                        print("INCORRECT PASSWORD")
-                        print("TRY AGAIN")
-                        main()
+                        continue
+                print("INCORRECT PASSWORD")
+                print("TRY AGAIN")
+                main()
             
             else:
-                print("NO SUCH USER ID FOUND")
-                print("PLS CREATE AN ACCOUNT")
-                create()
+                continue
+        print("NO SUCH USER ID FOUND")
+        print("PLS CREATE AN ACCOUNT")
+        create()
 
 
     elif choice==2:
@@ -76,9 +78,10 @@ def sn():
                 
 
 
-        
+
 #FUNTION FOR CREATING USER ACCOUNT
 def create():
+    c1=con.cursor()
     print("1.USER ACCOUNT")
     print("2.EMPLOYEE ACCCOUNT")
     print("3.EXIT")
@@ -106,7 +109,7 @@ def create():
                 n=input("ENTER YOUR NAME:")
                 c=input("ENTER YOUR CITY:")
                 z=int(input("ENTER YOUR PHONE NUMBER:"))
-                query="insert into user(user_id,pwd,name,city,phone_number,item_bought) values({},'{}','{}','{}',{},'NULL')".format(u,o,n,c,z)
+                query="insert into user(user_id,pwd,name,city,phone_number,item_bought) values({},'{}','{}','{}',{},NULL)".format(u,o,n,c,z)
                 c1.execute(query)
                 con.commit()
                 print("USER CODE SUCCESSFULLY ADDED")
@@ -257,7 +260,7 @@ def buy():
     hat4=c1.fetchall()
     b=list(hat4)
     print(b)
-    b1=input("ENTER YOUR PREFERRED COMPANY:")
+    b1=input("0ENTER YOUR PREFERRED COMPANY:")
     for i in range(len(b)):
         if b[i]==b1:
             print("HERE IS THE LIST OF VARIOUS MOBILE PHONE AVAILABLE OF THIS COMPANY:")
@@ -425,13 +428,17 @@ def main():
         print('3.DELETE ACCOUNT')
         print('4.VIEW DETAILS')
         print('5.EXIT')
-        ch1=print("Select the option you want:")
+        ch1=int(input("Select the option you want:"))
         if ch1==1:
             sn()
-        if ch1==2:
+        elif ch1==2:
             create()
-        if ch1==3:
+        elif ch1==3:
             delt()
+        elif ch1==4:
+            details()
+        else:
+            print("invalid choice mf")
 
 main()
 

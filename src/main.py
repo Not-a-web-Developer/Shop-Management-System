@@ -92,14 +92,21 @@ def create():
         for i in range(len(h2)):
             if h2[i]==u:
                 print("USER ID ALREADY EXITS")
+                o1=input("DO YOU WANT TO MAKE OTHER ID(Y/N)?")
+                if o1=="y" or "Y":
+                    cont3()
+                else:
+                    ("TAKING YOU TO MAIN PAGE")
+                    main()
 
 
 
             else:
+                o=input("ENTER YOUR PASSWORD:")
                 n=input("ENTER YOUR NAME:")
                 c=input("ENTER YOUR CITY:")
                 z=int(input("ENTER YOUR PHONE NUMBER:"))
-                query="insert into user(user_id,name,city,phone_number,item_bought) values('{}','{}','{}',{},'NULL')".format(u,n,c,z)
+                query="insert into user(user_id,pwd,name,city,phone_number,item_bought) values({},'{}','{}','{}',{},'NULL')".format(u,o,n,c,z)
                 c1.execute(query)
                 con.commit()
                 print("USER CODE SUCCESSFULLY ADDED")
@@ -159,6 +166,15 @@ def cont():
         print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
         print("==============================================================================")
         main()
+
+
+def cont3():
+    print("TAKING YOU TO CREATE ACCOUNT SECTION")
+    create()
+
+
+
+
 
 
 #DELETE FUNCTION(FOR USER)
@@ -267,7 +283,7 @@ def buy():
                         con.commit()
                         print("TRANSACTION DONE SUCCESSFULLY")
                         print("CONGRATULATIONS THE PHONE IS YOURS!")
-                        a6=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")
+                        a6=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")            #NEED TO ADD PRODUCT TO USER DETAILS
                         if a6=="y" or "Y":
                             cont2()
                         else:   
@@ -322,9 +338,20 @@ def order():
         if u1[i]==p1:
             c1.execute("delete from order where product_id='{}'".format(p1))
             con.commit()
-            c1.execute("select product_no,qty from products")
+            c1.execute("select product_id,qty from products where product_id={}".format(p1))
             t2=c1.fetchall()
             u2=list(t2)
+            if u2[2]==0:
+                print("THIS PRODUCT IS OUT OF STOCK")
+
+
+            else:
+                p2=u2[1]-1
+                c1.execute("insert into products(qty) values({})".format(p2))      #DOUBT
+                con.commit()
+                    
+                    
+
 
 
 
@@ -357,9 +384,15 @@ def details():
                         print("CITY",y3[3])
                         print("PHONE NUMBER",y3[4])
                         print("ITEM BOUGHT",y3[5])
-                        v3=input("DO YOU WANT TO CHANGE ANY OF YOUR DETAILS(EXCEPT ITEM BOUGHT)(Y/N)?")
+                        v3=input("DO YOU WANT TO CHANGE ANY OF YOUR DETAILS(EXCEPT USER ID AND ITEM BOUGHT)(Y/N)?")
                         if v3=="y" or "Y":
                             z4=input("WHICH DETAIL YOU WANT TO CHANGE?")
+                            if z4==2:
+                                g1=input("ENTER YOUR NEW PASSWORD:")
+                                c1.execute("insert into user(pwd) where user_id={v1} values('{}')".format(g1))         #DOUBT
+
+                                
+
 
                             
 
@@ -372,6 +405,8 @@ def details():
                             print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
                             print("==============================================================================")
                             main()
+
+
 
 
 

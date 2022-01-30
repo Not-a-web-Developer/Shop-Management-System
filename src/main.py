@@ -20,6 +20,7 @@ def sn():
     print("3. EXIT")
     choice=int(input("ENTER YOUR CHOICE:"))
     if choice==1:
+        global code
         c1.execute("select user_id from user")
         dat=c1.fetchall()
         code=int(input("ENTER YOUR USER ID:"))
@@ -284,6 +285,7 @@ def buy():
                         query2="insert into order(product_id,company,phone,price,config) values({},'{}','{}',{},'{})".format(a1,b1,z1,z2,z3)
                         c1.execute(query2)
                         con.commit()
+                        query3="insert into pwd from user where user_id = %s", (code,)
                         print("TRANSACTION DONE SUCCESSFULLY")
                         print("CONGRATULATIONS THE PHONE IS YOURS!")
                         a6=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")            #NEED TO ADD PRODUCT TO USER DETAILS
@@ -360,8 +362,7 @@ def order():
 
 def details():
     print("1.USER ACCOUNT")
-    print("2.EMPLOYEE ACCOUNT")
-    print("3.EXIT")
+    print("2.EXIT")
     ch10=int(input("ENTER YOUR CHOICE:"))
     if ch10==1:
         v1=int(input("ENTER YOUR USER ID:"))

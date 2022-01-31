@@ -8,7 +8,7 @@ create table user ( user_id int primary key not null, pwd tinytext not null, nam
 
 create table employee ( emp_code int primary key not null,pwd tinytext not null, name tinytext not null, city tinytext not null, phone_number bigint not null, designation tinytext not null);
 
-insert into employee(emp_code,pwd,name,city,phone_number,designation) values(21204,'suyash','navi mumbai',9879876565,'admin');
+insert into employee(emp_code,pwd,name,city,phone_number,designation) values(21204,'ph','suyash','navi mumbai',9879876565,'admin');
 
 insert into user(user_id,pwd,name,city,phone_number,item_bought) values(12345,'ash','ashutosh','kharghar',9898656543,NULL);
 
@@ -28,4 +28,4 @@ insert into products(product_id,company,phone,price,config) values(10007,'apple'
 
 insert into products(product_id,company,phone,price,config) values(10008,'apple','iPhone 8 Plus',70000,'RAM-8GB STORAGE-512GB');
 
-insert into products(product_id,company,phone,price,config) values(10009,'apple','iPhone X',50000,'RAM-6GB STORAGE-128GB');
+insert into products(product_id,company,phone,price,config) values(10009,'apple','iPhone X',50000,'RAM-6GB STORAGE-128GB');  

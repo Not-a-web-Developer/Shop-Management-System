@@ -6,4 +6,4 @@ def cls():
 
 def generate_unique_id():
     chars = ascii_uppercase + ascii_lowercase + digits
-    return "".join(choice(chars) for _ in range(10))
+    return "".join(choice(chars) for _ in range(5))

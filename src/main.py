@@ -1,4 +1,5 @@
 from logging import root
+from multiprocessing.managers import ValueProxy
 import mysql.connector
 import datetime
 import time
@@ -120,7 +121,7 @@ def create():
                 n=input("ENTER YOUR NAME:")
                 c=input("ENTER YOUR CITY:")
                 z=int(input("ENTER YOUR PHONE NUMBER:"))
-                query="insert into user(user_id,pwd,name,city,phone_number,item_bought) values({},'{}','{}','{}',{},NULL)".format(u,o,n,c,z)
+                query="insert into user(user_id,pwd,name,city,phone_number,item_bought) values({},'{}','{}','{}',{},0)".format(u,o,n,c,z)
                 c1.execute(query)
                 con.commit()
                 print("USER CODE SUCCESSFULLY ADDED")
@@ -295,11 +296,23 @@ def buy():
                     z2=print("PRICE:",a2[0][3])
                     z3=print("ITS CONFIGURATION ARE:",a2[0][4])
                     a4=input("DO YOU WANT TO BUY THIS PHONE(Y/N)?:")
-                    if a4=="y" or "Y":                    #(IF WE TYPE N ITS SHOWING TRANSACTION DONE)
-                        c1.execute("insert into orders(product_id,company,phone,price,config) values(%s, %s, %s, %s, %s)",(a1, b1, a2[0][2], a2[0][3], a2[0][4]))
-                        
+                    if a4=="y":                    #(IF WE TYPE N ITS SHOWING TRANSACTION DONE)
+                        query_1="insert into orders(transaction_id,product_id,company,phone,price,config) values(%s, %s, %s, %s, %s, %s)"
+                        record=(utils.generate_unique_id(),a1, b1, a2[0][2], a2[0][3], a2[0][4])
+                        c1.execute(query_1,record)
                         con.commit()
-                        query3="insert into pwd from user where user_id = %s", (code,)
+                        c1.execute("select item_bought from user where user_id=%s",(code,))
+                        val5=c1.fetchall()
+                        lst=list(val5)
+                        print(lst)
+                        record1=lst[0][0]
+                        print(type(lst[0][0]))
+                        record1 +=1
+                        query9="update user set item_bought= %s where user_id= %s"
+                        val6=(record1,code)
+                        c1.execute(query9,val6)  
+                        con.commit()
+                        print("PHONE ADDED TO YOUR ACCOUNT")
                         print("TRANSACTION DONE SUCCESSFULLY")
                         print("CONGRATULATIONS THE PHONE IS YOURS!")
                         a6=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")            #NEED TO ADD PRODUCT TO USER DETAILS
@@ -313,7 +326,7 @@ def buy():
 
                     else:
                         a5=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")
-                        if a5=="y" or "Y":
+                        if a5=="y":
                             cont2()                               
                         else:
                             print("THANK YOU")
@@ -351,25 +364,24 @@ def cont2():
 
 def order():
     print("WELCOME TO THE SECTION")
-    p1=int(input("ENTER THE PRODUCT ID:"))
-    c1.execute("select product_id from orders")
+    p1=int(input("ENTER THE PRODUCT ID: "))
+    c1.execute("select product_id from orders where product_id=%s",(p1,))
     t1=c1.fetchall()
     u1=list(t1)
-    for i in range(len(u1)):
-        if u1[i]==(p1,):
-            c1.execute("delete from order where product_id='{}'".format(p1))
-            con.commit()
-            c1.execute("select product_id,qty from products where product_id={}".format(p1))
-            t2=c1.fetchall()
-            u2=list(t2)
-            if u2[2]==0:
-                print("THIS PRODUCT IS OUT OF STOCK")
+    record2=len(u1)
+    c1.execute("select qty from products where product_id=%s",(p1,))
+    record3=c1.fetchall()
+    lst1=list(record3)
+    record4=lst1[0][0]-record2
+    query10="update products set qty=%s where product_id=%s"
+    record5=(record4,p1)
+    c1.execute(query10,record5)
+    con.commit()
+    main()
 
+    
 
-            else:
-                p2=u2[1]-1
-                c1.execute("insert into products(qty) values({})".format(p2))      #DOUBT
-                con.commit()
+            
                     
                     
 

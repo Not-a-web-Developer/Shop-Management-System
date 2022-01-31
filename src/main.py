@@ -11,6 +11,8 @@ sql_pw = input("MySQL password: ")
 
 con=mysql.connector.connect(user=sql_usrnm, password=sql_pw, host="localhost", database="Shop")
 print("connection succeeded!")
+time.sleep(0.42)
+utils.cls()
 c1=con.cursor()
 
 #FUNCTION FOR SIGN IN
@@ -301,7 +303,7 @@ def buy():
                         print("TRANSACTION DONE SUCCESSFULLY")
                         print("CONGRATULATIONS THE PHONE IS YOURS!")
                         a6=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")            #NEED TO ADD PRODUCT TO USER DETAILS
-                        if a6=="y" or "Y":
+                        if a6=="y":
                             cont2()
                         else:   
                             print("THANK YOU")

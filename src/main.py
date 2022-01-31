@@ -15,15 +15,15 @@ c1=con.cursor()
 
 #FUNCTION FOR SIGN IN
 def sn():
-    print("1. User login ")
-    print("2. Employee login")
+    print("1. USER LOGIN ")
+    print("2. EMPLOYEE LOGIN")
     print("3. EXIT")
-    choice=int(input("ENTER YOUR CHOICE:"))
+    choice=int(input("ENTER YOUR CHOICE: "))
     if choice==1:
         global code
         c1.execute("select user_id from user")
         dat=c1.fetchall()
-        code=int(input("ENTER YOUR USER ID:"))
+        code=int(input("ENTER YOUR USER ID: "))
         hi=list(dat)
         for i in range(0, len(hi)):
             if hi[i]==(code,):
@@ -52,30 +52,38 @@ def sn():
 
 
     elif choice==2:
-        code1=int(input("ENTER EMPLOYEE ID:"))
-        c1.execute("select employee_id from employee")
+        code1=int(input("ENTER EMPLOYEE ID: "))
+        c1.execute("select emp_id from employee")
         dat1=c1.fetchall()
         hi1=list(dat1)
         for i in range(len(hi1)):
-            if hi1[i]==code1:
+            if hi1[i]==(code1,):
                 print("EMPLOYEE ID SUCCESSFULLY FOUND")
-                pwd=input("ENTER YOUR PASSWORD:")
-                c1.execute("select pswd from employee")
+                pwd=input("ENTER YOUR PASSWORD: ")
+                c1.execute("select pwd from employee")
                 dat2=c1.fetchall()
                 hi2=list(dat2)
                 for i in range(len(hi2)):
-                    if hi2[i]==pwd:
+                    if hi2[i]==(pwd,):
                         print("EMPLOYEE SUCCESSFULLY LOGGED IN!")
                         order()
                     
                     else:
-                        print("TRY AGAIN")
-                        main()        #DOUBT!!!
+                        continue
+                print("WRONG PASSWORD")    
+                print("TRY AGAIN!!")
+                main()       
 
 
             else:
-                print("NO SUCH ID FOUND")
-                main()            
+                continue
+        print("NO SUCH ID FOUND")
+        print("TRY AGAIN")
+        main() 
+
+    else:
+        print("TAKING YOU TO MAIN SECTION")
+        main()           
                 
 
 
@@ -86,10 +94,10 @@ def create():
     print("1.USER ACCOUNT")
     print("2.EMPLOYEE ACCCOUNT")
     print("3.EXIT")
-    ch2=int(input("Enter Your Choice:"))
+    ch2=int(input("ENTER YOUR CHOICE: "))
     if ch2==1:
         print("WELCOME TO USER ACCOUNT REGISTRATION")
-        u=input("ENTER A USER ID:")
+        u=input("ENTER A USER ID: ")
         c1.execute("select user_id from user")
         hat=c1.fetchall()
         h2=list(hat)
@@ -121,7 +129,7 @@ def create():
     elif ch2==2:
         print("WELCOME TO EMPLOYEE ACCOUNT REGISTRATION")
         u1=int(input("ENTER A EMPLOYEE ID:"))
-        c1.execute("select emp_code from employee")
+        c1.execute("select emp_id from employee")
         hat1=c1.fetchall()
         h21=list(hat1)
         for i in range(len(h21)):
@@ -139,7 +147,7 @@ def create():
                 z1=int(input("ENTER YOUR PHONE NUMBER:"))
                 d=input("ENTER YOUR DESIGNATION:")
                 pwd1=input("ENTER YOUR PASSWORD:")
-                query1="insert into employee(emp_code,name,city,phone number,designation,pswd) values({},'{}','{}',{},'{}','{}')".format(u1,n1,c1,z1,d,pwd1)
+                query1="insert into employee(emp_code,pwd,name,city,phone number,designation) values({},'{}','{}','{}',{},'{}')".format(u1,pwd1,n1,c1,z1,d)
                 c1.execute(query1)
                 con.commit()
                 print("EMPLOYEE CODE SUCCESSFULLY ADDED")
@@ -227,13 +235,13 @@ def delt():
 #DELETE(FOR EMPLOYEE)
     if ch5==2:
         h=int(input("ENTER THE EMPLOYEE TO BE DELETED:"))
-        c1.execute("select employee_id from employee")
+        c1.execute("select emp_id from employee")
         hat3=c1.fetchall()
         h5=list(hat3)
         for i in range(len(h5)):
             if h5[i]==h:
                 pwd2=input("ENTER YOUR PASSWORD:")
-                c1.execute("select pswd from employee")
+                c1.execute("select pwd from employee")
                 hat4=c1.fetchall()
                 h6=list(hat4)
                 for i in range(len(h6)):
@@ -257,33 +265,37 @@ def delt():
 def buy():
     print("WELCOME TO BUYING SECTION")
     print("HERE ARE COMPANIES OF MOBILE PHONES AVAILABLE:")
-    c1.execute("select company from products")
+    c1.execute("select distinct company from products")
     hat4=c1.fetchall()
     b=list(hat4)
     print(b)
-    b1=input("0ENTER YOUR PREFERRED COMPANY:")
+    b1=input("ENTER YOUR PREFERRED COMPANY:")
     for i in range(len(b)):
-        if b[i]==b1:
+       
+        if b[i]==(b1,):
             print("HERE IS THE LIST OF VARIOUS MOBILE PHONE AVAILABLE OF THIS COMPANY:")
             st="select product_id,phone,price from products where company='{}'".format(b1)
             c1.execute(st)     #DOUBT
             hat5=c1.fetchall()
             a=list(hat5)
-            print(a)
-            a1=int(input("SELECT THE PHONE YOU LIKED FOR ITS CONFIGURATION:"))
-            for i in range(len(a1)):
-                if a1[i][0]==a1:
+            for i in range(len(a)):
+                print(a[i])
+            
+            a1=int(input("SELECT A PHONE TO VIEW ITS CONFIGURATION(ENTER PRODUCT ID):"))
+            for i in range(len(a)):
+                if a[i][0]==a1:
                     print("THE CONFIGURATIONS ARE:")
-                    c1.execute("select product_id,company,phone,price,config from products where sr_no={}".format(a1))
+                    c1.execute("select product_id,company,phone,price,config from products where product_id=%s", (a1,))
                     hat5=c1.fetchall()
                     a2=list(hat5)
-                    z1=print("PHONE:",a2[2])
-                    z2=print("PRICE:",a2[3])
-                    z3=print("ITS CONFIGURATION ARE:",a2[4])
+                    print(a2)
+                    z1=print("PHONE:",a2[0][2])
+                    z2=print("PRICE:",a2[0][3])
+                    z3=print("ITS CONFIGURATION ARE:",a2[0][4])
                     a4=input("DO YOU WANT TO BUY THIS PHONE(Y/N)?:")
-                    if a4=="y" or "Y":
-                        query2="insert into order(product_id,company,phone,price,config) values({},'{}','{}',{},'{})".format(a1,b1,z1,z2,z3)
-                        c1.execute(query2)
+                    if a4=="y" or "Y":                    #(IF WE TYPE N ITS SHOWING TRANSACTION DONE)
+                        c1.execute("insert into orders(product_id,company,phone,price,config) values(%s, %s, %s, %s, %s)",(a1, b1, a2[0][2], a2[0][3], a2[0][4]))
+                        
                         con.commit()
                         query3="insert into pwd from user where user_id = %s", (code,)
                         print("TRANSACTION DONE SUCCESSFULLY")
@@ -310,12 +322,14 @@ def buy():
 
                 
                 else:
+                    continue
                     print("NO SUCH SR_NO")
                     print("TRY AGAIN")
                     cont2()
 
     
         else:
+            continue
             print("SORRY THE GIVEN COMPANY IS NOT IN OUR STORE")
             a7=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")
             if a7=="y" or "Y":
@@ -336,11 +350,11 @@ def cont2():
 def order():
     print("WELCOME TO THE SECTION")
     p1=int(input("ENTER THE PRODUCT ID:"))
-    c1.execute("select product_id from order")
+    c1.execute("select product_id from orders")
     t1=c1.fetchall()
     u1=list(t1)
     for i in range(len(u1)):
-        if u1[i]==p1:
+        if u1[i]==(p1,):
             c1.execute("delete from order where product_id='{}'".format(p1))
             con.commit()
             c1.execute("select product_id,qty from products where product_id={}".format(p1))
@@ -370,66 +384,104 @@ def details():
         x1=c1.fetchall()
         y1=list(x1)
         for i in range(len(y1)):
-            if y1[i]==v1:
+            if y1[i]==(v1,):
                 v2=input("ENTER YOUR PASSWORD:")
                 c1.execute("select pwd from user")
                 x2=c1.fetchall()
                 y2=list(x2)
                 for i in range(len(y2)):
-                    if y2[i]==v2:
+                    if y2[i]==(v2,):
                         print("ACCOUNT ACCESSED!")
                         print("HERE ARE THE DETAILS OF YOUR ACCOUNT")
-                        c1.execute("select user_id,pwd,name,city,phone_number,item_bought where user_id={}".format(v1))
+                        c1.execute("select user_id,pwd,name,city,phone_number,item_bought from user where user_id=%s",(v1,))
                         x3=c1.fetchall()
                         y3=list(x3)
-                        print("USER ID:",y3[0])
-                        print("PASSWORD:",y3[1])
-                        print("NAME",y3[2])
-                        print("CITY",y3[3])
-                        print("PHONE NUMBER",y3[4])
-                        print("ITEM BOUGHT",y3[5])
+                        print("1.USER ID: ",y3[0][0])
+                        print("2.PASSWORD: ",y3[0][1])
+                        print("3.NAME: ",y3[0][2])
+                        print("4.CITY: ",y3[0][3])
+                        print("5.PHONE NUMBER: ",y3[0][4])
+                        print("6.ITEM BOUGHT: ",y3[0][5])
                         v3=input("DO YOU WANT TO CHANGE ANY OF YOUR DETAILS(EXCEPT USER ID AND ITEM BOUGHT)(Y/N)?")
-                        if v3=="y" or "Y":
-                            z4=input("WHICH DETAIL YOU WANT TO CHANGE?")
+                        if v3=='y':
+                            z4=int(input("WHICH DETAIL YOU WANT TO CHANGE?(ENTER THE SR.NO): "))
                             if z4==2:
-                                g1=input("ENTER YOUR NEW PASSWORD:")
+                                g1=input("ENTER YOUR NEW PASSWORD: ")
                                 query5="update user set pwd= %s where user_id= %s"
-                                val=(v1,g1)
-                                c1.execute(query5,val)                       #DOUBT
+                                val1=(g1,v1)
+                                c1.execute(query5,val1)                   
                                 con.commit()
-
-                                
-
-
-                            
-
-
-
-
+                                print("PASSWORD SUCCESSFULLY CHANGED!")
+                                print("THANK YOU")
+                                main()
+                            elif z4==3:
+                                g2=input("ENTER YOUR NEW NAME: ")
+                                query6="update user set name= %s where user_id=%s"
+                                val2=(g2,v1)
+                                c1.execute(query6,val2)
+                                con.commit()
+                                print("NAME SUCCESSFULLY CHANGED!")
+                                print("THANK YOU")
+                                main()
+                            elif z4==4:
+                                g3=input("ENTER YOUR NEW CITY: ")
+                                query7="update user set city= %s where user_id=%s"
+                                val3=(g3,v1)
+                                c1.execute(query7,val3)
+                                con.commit()
+                                print("CITY SUCCESSFULLY CHANGED!")
+                                print("THANK YOU")
+                                main()
+                            elif z4==5:
+                                g4=input("ENTER YOUR NEW CITY: ")
+                                query8="update user set phone_number= %s where user_id=%s"
+                                val4=(g4,v1)
+                                c1.execute(query8,val4)
+                                con.commit()
+                                print("PHONE NO SUCCESSFULLY CHANGED!")
+                                print("THANK YOU")
+                                main()
+                            else:
+                                print("INVALID CHOICE!!!")
+                                main()
 
                         else:
-                            print("THANK YOU")
                             print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
                             print("==============================================================================")
                             main()
 
+                    else:
+                        continue
+                print("WRONG PASSWORD")
+                print("TRY AGAIN")
+                cont4()
 
+            else:
+                continue
+        print("INVALID USER ID!!!")
+        print("TRY AGAIN")
+        cont4()
 
+    else:
+        print("TAKING YOU TO MAIN SECTION")
+        main()
+                            
 
-
-
+def cont4():
+    print("TAKING YOU TO VIEW DETAILS SECTION: ")
+    details()
 
 
 def main():
-    print('WELECOME TO SSA Electronics Shop Management System ')
-    ch=int(input("Press 1 to continue"))
+    print('WELCOME TO  ')
+    ch=int(input("PRESS 1 TO CONTINUE"))
     if ch==1:
         print('1.SIGN IN')
         print('2.CREATE ACCOUNT')
         print('3.DELETE ACCOUNT')
         print('4.VIEW DETAILS')
         print('5.EXIT')
-        ch1=int(input("Select the option you want:"))
+        ch1=int(input("SELECT THE OPTION YOU WANT(SR NO): "))
         if ch1==1:
             sn()
         elif ch1==2:
@@ -439,7 +491,7 @@ def main():
         elif ch1==4:
             details()
         else:
-            print("invalid choice mf")
+            print("INVALID CHOICE!!!")
 
 main()
 

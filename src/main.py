@@ -100,7 +100,7 @@ def create():
     ch2=int(input("ENTER YOUR CHOICE: "))
     if ch2==1:
         print("WELCOME TO USER ACCOUNT REGISTRATION")
-        u=input("ENTER A USER ID: ")
+        u=int(input("ENTER A USER ID: "))
         c1.execute("select user_id from user")
         hat=c1.fetchall()
         h2=list(hat)
@@ -108,7 +108,7 @@ def create():
         for i in range(len(h2)):              #PROBLEM!!!
             print(h2[i][0])
             if h2[i][0]==u:
-                print("USER ID ALREADY EXITS")
+                print("USER ID ALREADY EXISTS")
                 o1=input("DO YOU WANT TO MAKE OTHER ID(Y/N)?")
                 if o1=="y":
                     cont3()
@@ -127,7 +127,7 @@ def create():
         query="insert into user(user_id,pwd,name,city,phone_number,item_bought) values({},'{}','{}','{}',{},0)".format(u,o,n,c,z)
         c1.execute(query)
         con.commit()
-        print("USER CODE SUCCESSFULLY ADDED")
+        print("USER SUCCESSFULLY ADDED")
         print("TAKING YOU TO SIGN IN PAGE")
         sn()
 #END OF USER REGISTRATION
@@ -317,14 +317,8 @@ def buy():
                             print("PHONE ADDED TO YOUR ACCOUNT")
                             print("TRANSACTION DONE SUCCESSFULLY")
                             print("CONGRATULATIONS THE PHONE IS YOURS!")
-                            a6=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")            #NEED TO ADD PRODUCT TO USER DETAILS
-                            if a6=="y":
-                                cont2()
-                            else:   
-                                print("THANK YOU")
-                                print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
-                                print("==============================================================================")
-                                main()
+                            print("PLS HAND OVER THE TERMINAL TO EMPLOYEE")
+                            sn()
 
                         else:
                             a5=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")
@@ -505,8 +499,12 @@ def main():
         elif ch1==4:
             details()
         else:
-            print("INVALID CHOICE!!!")
-
+            while True:
+                ch21=input("DO YOU REALLY WANT TO EXIT THE PROGRAM?(Y/N)")
+                if ch21=="y":
+                    break
+                else:
+                    main()
     else:
         print("INVALID ENTRY")        
 

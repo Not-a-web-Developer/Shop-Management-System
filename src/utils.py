@@ -1,8 +1,9 @@
 from string import ascii_uppercase, ascii_lowercase, digits
 from random import choice
+from os import system
 
 def cls():
-    print("\n" * 100)
+    system("clear")
 
 def generate_unique_id():
     chars = ascii_uppercase + ascii_lowercase + digits

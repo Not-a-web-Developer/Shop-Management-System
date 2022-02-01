@@ -12,7 +12,7 @@ sql_pw = input("MySQL password: ")
 
 con=mysql.connector.connect(user=sql_usrnm, password=sql_pw, host="localhost", database="Shop")
 print("connection succeeded!")
-time.sleep(0.42)
+time.sleep(0.69)
 utils.cls()
 c1=con.cursor()
 
@@ -38,7 +38,10 @@ def sn():
                 for i in range(len(hj)):
                     if hj[i]==(code1,):
                         print("ACCOUNT ACCESSED")
+                        time.sleep(0.420)
                         print("TAKING YOU TO PRODUCTS SECTION...")
+                        time.sleep(0.69)
+                        utils.cls()
                         buy()
                     
                     else:
@@ -69,6 +72,8 @@ def sn():
                 for i in range(len(hi2)):
                     if hi2[i]==(pwd,):
                         print("EMPLOYEE SUCCESSFULLY LOGGED IN!")
+                        time.sleep(0.69)
+                        utils.cls()
                         order()
                     
                     else:
@@ -86,6 +91,8 @@ def sn():
 
     else:
         print("TAKING YOU TO MAIN SECTION")
+        time.sleep(0.69)
+        utils.cls()
         main()           
                 
 
@@ -114,6 +121,8 @@ def create():
                     cont3()
                 else:
                     ("TAKING YOU TO MAIN PAGE")
+                    time.sleep(0.69)
+                    utils.cls()
                     main()
 
 
@@ -129,6 +138,8 @@ def create():
         con.commit()
         print("USER SUCCESSFULLY ADDED")
         print("TAKING YOU TO SIGN IN PAGE")
+        time.sleep(0.69)
+        utils.cls()
         sn()
 #END OF USER REGISTRATION
 
@@ -143,6 +154,8 @@ def create():
             if h21[i]==(u1,):
                 print("EMPLOYEE ID ALREADY EXISTS")
                 print("TAKING YOU TO SIGN IN PAGE")
+                time.sleep(0.69)
+                utils.cls()
                 sn()
 
             else:
@@ -161,6 +174,8 @@ def create():
 
     else:
         print("TAKING YOU TO MAIN PAGE")
+        time.sleep(0.69)
+        utils.cls()
         main()
 
 
@@ -173,11 +188,15 @@ def cont1():
     if ch4==1:
         order()
     else:
+        time.sleep(0.69)
+        utils.cls()
         main()
 
 
 def cont3():
     print("TAKING YOU TO CREATE ACCOUNT SECTION")
+    time.sleep(0.69)
+    utils.cls()
     create()
 
 
@@ -209,10 +228,14 @@ def delt():
                             con.commit()
                             print("USER ID SUCCESSFULLY DELETED!")
                             print("THANK YOU FOR BEING WITH US")
+                            time.sleep(0.69)
+                            utils.cls()
                             main()
                         
                         else:
                             print("TAKING YOU TO MAIN PAGE")
+                            time.sleep(0.69)
+                            utils.cls()
                             main()
 
                     else:
@@ -251,10 +274,14 @@ def delt():
                             con.commit()
                             print("EMPLOYEE ID SUCCESSFULLY DELETED!")
                             print("THANK YOU FOR YOUR SERVICES")
+                            time.sleep(0.69)
+                            utils.cls()
                             main()
 
     else:
         print("TAKING YOU TO MAIN PAGE")
+        time.sleep(0.69)
+        utils.cls()
         main()
 
 
@@ -297,6 +324,8 @@ def buy():
                             print("THANK YOU")
                             print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
                             print("==============================================================================")
+                            time.sleep(0.69)
+                            utils.cls()
                             main()
                     else:
                         a4=input("DO YOU WANT TO BUY THIS PHONE(Y/N)?:")
@@ -318,6 +347,8 @@ def buy():
                             print("TRANSACTION DONE SUCCESSFULLY")
                             print("CONGRATULATIONS THE PHONE IS YOURS!")
                             print("PLS HAND OVER THE TERMINAL TO EMPLOYEE")
+                            time.sleep(0.69)
+                            utils.cls()
                             sn()
 
                         else:
@@ -328,6 +359,8 @@ def buy():
                                 print("THANK YOU")
                                 print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
                                 print("==============================================================================")
+                                time.sleep(0.69)
+                                utils.cls()
                                 main()
 
 
@@ -347,12 +380,16 @@ def buy():
     else:
         print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
         print("==============================================================================")
+        time.sleep(0.69)
+        utils.cls()
         main()
 
 
                 
 def cont2():
     print("TAKING YOU TO BUYING SECTION....")
+    time.sleep(0.69)
+    utils.cls()
     buy()
 
 
@@ -378,6 +415,8 @@ def order():
     c1.execute(query11,record6)
     con.commit()
     print("UPDATED THE ORDERS SECTION")
+    time.sleep(0.69)
+    utils.cls()
     main()
 
 
@@ -421,6 +460,8 @@ def details():
                                 con.commit()
                                 print("PASSWORD SUCCESSFULLY CHANGED!")
                                 print("THANK YOU")
+                                time.sleep(0.69)
+                                utils.cls()
                                 main()
                             elif z4==3:
                                 g2=input("ENTER YOUR NEW NAME: ")
@@ -430,6 +471,8 @@ def details():
                                 con.commit()
                                 print("NAME SUCCESSFULLY CHANGED!")
                                 print("THANK YOU")
+                                time.sleep(0.69)
+                                utils.cls()
                                 main()
                             elif z4==4:
                                 g3=input("ENTER YOUR NEW CITY: ")
@@ -439,6 +482,8 @@ def details():
                                 con.commit()
                                 print("CITY SUCCESSFULLY CHANGED!")
                                 print("THANK YOU")
+                                time.sleep(0.69)
+                                utils.cls()
                                 main()
                             elif z4==5:
                                 g4=input("ENTER YOUR NEW CITY: ")
@@ -448,14 +493,20 @@ def details():
                                 con.commit()
                                 print("PHONE NO SUCCESSFULLY CHANGED!")
                                 print("THANK YOU")
+                                time.sleep(0.69)
+                                utils.cls()
                                 main()
                             else:
                                 print("INVALID CHOICE!!!")
+                                time.sleep(0.69)
+                                utils.cls()
                                 main()
 
                         else:
                             print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
                             print("==============================================================================")
+                            time.sleep(0.69)
+                            utils.cls()
                             main()
 
                     else:
@@ -472,17 +523,21 @@ def details():
 
     else:
         print("TAKING YOU TO MAIN SECTION")
+        time.sleep(0.69)
+        utils.cls()
         main()
                             
 
 def cont4():
     print("TAKING YOU TO VIEW DETAILS SECTION: ")
+    time.sleep(0.69)
+    utils.cls()
     details()
 
 
 def main():
     print('WELCOME TO   ')
-    ch=int(input("PRESS 1 TO CONTINUE "))
+    ch=int(input("PRESS 1 TO CONTINUE"))
     if ch==1:
         print('1.SIGN IN')
         print('2.CREATE ACCOUNT')
@@ -502,8 +557,10 @@ def main():
             while True:
                 ch21=input("DO YOU REALLY WANT TO EXIT THE PROGRAM?(Y/N)")
                 if ch21=="y":
+                    utils.cls()
                     break
                 else:
+                    utils.cls()
                     main()
     else:
         print("INVALID ENTRY")        

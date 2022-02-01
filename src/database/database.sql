@@ -8,7 +8,7 @@ create table user ( user_id int primary key not null, pwd tinytext not null, nam
 
 create table employee ( emp_id int primary key not null,pwd tinytext not null, name tinytext not null, city tinytext not null, phone_number bigint not null, designation tinytext not null);
 
-create table orders(transaction_id varchar(5) primary key not null, product_id int not null, company text null, phone text not null, price int not null, config text not null);
+create table orders(transaction_id varchar(5) primary key not null, product_id int not null, company text null, phone text not null, price int not null, config text not null, updated text not null);
 
 insert into employee(emp_id,pwd,name,city,phone_number,designation) values(21204,'ph','suyash','navi mumbai',9879876565,'admin');
 

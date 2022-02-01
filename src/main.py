@@ -104,11 +104,13 @@ def create():
         c1.execute("select user_id from user")
         hat=c1.fetchall()
         h2=list(hat)
-        for i in range(len(h2)):
-            if h2[i]==u:
+        print(h2)
+        for i in range(len(h2)):              #PROBLEM!!!
+            print(h2[i][0])
+            if h2[i][0]==u:
                 print("USER ID ALREADY EXITS")
                 o1=input("DO YOU WANT TO MAKE OTHER ID(Y/N)?")
-                if o1=="y" or "Y":
+                if o1=="y":
                     cont3()
                 else:
                     ("TAKING YOU TO MAIN PAGE")
@@ -117,15 +119,17 @@ def create():
 
 
             else:
-                o=input("ENTER YOUR PASSWORD:")
-                n=input("ENTER YOUR NAME:")
-                c=input("ENTER YOUR CITY:")
-                z=int(input("ENTER YOUR PHONE NUMBER:"))
-                query="insert into user(user_id,pwd,name,city,phone_number,item_bought) values({},'{}','{}','{}',{},0)".format(u,o,n,c,z)
-                c1.execute(query)
-                con.commit()
-                print("USER CODE SUCCESSFULLY ADDED")
-                cont()
+                continue
+        o=input("ENTER YOUR PASSWORD:")
+        n=input("ENTER YOUR NAME:")
+        c=input("ENTER YOUR CITY:")
+        z=int(input("ENTER YOUR PHONE NUMBER:"))
+        query="insert into user(user_id,pwd,name,city,phone_number,item_bought) values({},'{}','{}','{}',{},0)".format(u,o,n,c,z)
+        c1.execute(query)
+        con.commit()
+        print("USER CODE SUCCESSFULLY ADDED")
+        print("TAKING YOU TO SIGN IN PAGE")
+        sn()
 #END OF USER REGISTRATION
 
 # FOR CREATING EMPLOYEE ACCOUNT
@@ -136,27 +140,29 @@ def create():
         hat1=c1.fetchall()
         h21=list(hat1)
         for i in range(len(h21)):
-            if h21[i]==u1:
+            if h21[i]==(u1,):
                 print("EMPLOYEE ID ALREADY EXISTS")
                 print("TAKING YOU TO SIGN IN PAGE")
                 sn()
 
-
-
-
             else:
-                n1=input("ENTER YOUR NAME:")
-                c1=input("ENTER YOUR CITY:")
-                z1=int(input("ENTER YOUR PHONE NUMBER:"))
-                d=input("ENTER YOUR DESIGNATION:")
-                pwd1=input("ENTER YOUR PASSWORD:")
-                query1="insert into employee(emp_code,pwd,name,city,phone number,designation) values({},'{}','{}','{}',{},'{}')".format(u1,pwd1,n1,c1,z1,d)
-                c1.execute(query1)
-                con.commit()
-                print("EMPLOYEE CODE SUCCESSFULLY ADDED")
-
-                cont1()
+                continue
+        n1=input("ENTER YOUR NAME:")
+        c1=input("ENTER YOUR CITY:")
+        z1=int(input("ENTER YOUR PHONE NUMBER:"))
+        d=input("ENTER YOUR DESIGNATION:")
+        pwd1=input("ENTER YOUR PASSWORD:")
+        query1="insert into employee(emp_code,pwd,name,city,phone number,designation) values({},'{}','{}','{}',{},'{}')".format(u1,pwd1,n1,c1,z1,d)
+        c1.execute(query1)
+        con.commit()
+        print("EMPLOYEE CODE SUCCESSFULLY ADDED")
+        cont1()
 #END OF EMPLOYEE REGISTRATION
+
+    else:
+        print("TAKING YOU TO MAIN PAGE")
+        main()
+
 
 #CALLING CONTINUE FUNCTION(FOR EMPLOYEE)
 def cont1():
@@ -169,27 +175,10 @@ def cont1():
     else:
         main()
 
-#CALLING CONTINUE FUNCTION(FOR USER)
-def cont():
-    print("1.CONTINUE SHOPPING")
-    print("2.EXIT")
-    ch3=int(input("ENTER YOUR CHOICE:"))
-    if ch3==1:
-        buy()
-    else:
-        print("THANK YOU")
-        print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
-        print("==============================================================================")
-        main()
-
 
 def cont3():
     print("TAKING YOU TO CREATE ACCOUNT SECTION")
     create()
-
-
-
-
 
 
 #DELETE FUNCTION(FOR USER)
@@ -206,30 +195,34 @@ def delt():
         hat1=c1.fetchall()
         h3=list(hat1)
         for i in range(len(h3)):
-            if h3[i]==f:
+            if h3[i]==(f,):
                 pwd1=input("ENTER YOUR PASSWORD:")
-                c1.execute("select pswd from user")
+                c1.execute("select pwd from user")
                 hat2=c1.fetchall()
                 h4=list(hat2)
                 for i in range(len(h4)):
-                    if h4[i]==pwd1:
+                    if h4[i]==(pwd1,):
                         print("ACCOUNT ACCESSED")
-                        g=int(input("ARE YOU SURE ABOUT DELETING YOUR ACCOUNT:"))
-                        print("1.YES")
-                        print("2.NO")
-                        if g==1:
-                            c1.execute("delete from user where user_id={}".format(f))
+                        g=input("ARE YOU SURE ABOUT DELETING YOUR ACCOUNT(Y/N): ")
+                        if g=="y":
+                            c1.execute("delete from user where user_id='{}'".format(f))
                             con.commit()
                             print("USER ID SUCCESSFULLY DELETED!")
                             print("THANK YOU FOR BEING WITH US")
                             main()
+                        
+                        else:
+                            print("TAKING YOU TO MAIN PAGE")
+                            main()
 
                     else:
+                        continue
                         print("SORRY WRONG PASSWROD")
                         print("PLS TRY AGAIN")
                         main()
 
             else:
+                continue
                 print("USER ID DOES NOT EXISTS")
                 print("PLS TRY AGAIN")
                 main()
@@ -278,7 +271,7 @@ def buy():
         if b[i]==(b1,):
             print("HERE IS THE LIST OF VARIOUS MOBILE PHONE AVAILABLE OF THIS COMPANY:")
             st="select product_id,phone,price from products where company='{}'".format(b1)
-            c1.execute(st)     #DOUBT
+            c1.execute(st)
             hat5=c1.fetchall()
             a=list(hat5)
             for i in range(len(a)):
@@ -288,71 +281,79 @@ def buy():
             for i in range(len(a)):
                 if a[i][0]==a1:
                     print("THE CONFIGURATIONS ARE:")
-                    c1.execute("select product_id,company,phone,price,config from products where product_id=%s", (a1,))
+                    c1.execute("select product_id,company,phone,price,config,qty from products where product_id=%s", (a1,))
                     hat5=c1.fetchall()
                     a2=list(hat5)
-                    print(a2)
-                    z1=print("PHONE:",a2[0][2])
-                    z2=print("PRICE:",a2[0][3])
-                    z3=print("ITS CONFIGURATION ARE:",a2[0][4])
-                    a4=input("DO YOU WANT TO BUY THIS PHONE(Y/N)?:")
-                    if a4=="y":                    #(IF WE TYPE N ITS SHOWING TRANSACTION DONE)
-                        query_1="insert into orders(transaction_id,product_id,company,phone,price,config) values(%s, %s, %s, %s, %s, %s)"
-                        record=(utils.generate_unique_id(),a1, b1, a2[0][2], a2[0][3], a2[0][4])
-                        c1.execute(query_1,record)
-                        con.commit()
-                        c1.execute("select item_bought from user where user_id=%s",(code,))
-                        val5=c1.fetchall()
-                        lst=list(val5)
-                        print(lst)
-                        record1=lst[0][0]
-                        print(type(lst[0][0]))
-                        record1 +=1
-                        query9="update user set item_bought= %s where user_id= %s"
-                        val6=(record1,code)
-                        c1.execute(query9,val6)  
-                        con.commit()
-                        print("PHONE ADDED TO YOUR ACCOUNT")
-                        print("TRANSACTION DONE SUCCESSFULLY")
-                        print("CONGRATULATIONS THE PHONE IS YOURS!")
-                        a6=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")            #NEED TO ADD PRODUCT TO USER DETAILS
-                        if a6=="y":
-                            cont2()
-                        else:   
-                            print("THANK YOU")
-                            print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
-                            print("==============================================================================")
-                            main()
-
-                    else:
-                        a5=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")
-                        if a5=="y":
+                    z1=print("PHONE: ",a2[0][2])
+                    z2=print("PRICE: ",a2[0][3])
+                    z3=print("ITS CONFIGURATION ARE: ",a2[0][4])
+                    z4=print("NO. OF PIECES AVAILABLE OF THIS PHONE: ",a2[0][5])
+                    if a2[0][5]==0:
+                        print("SORRY THE GIVEN PHONE IS OUT OF STOCK")
+                        a8=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")
+                        if a8=="y":
                             cont2()                               
                         else:
                             print("THANK YOU")
                             print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
                             print("==============================================================================")
                             main()
+                    else:
+                        a4=input("DO YOU WANT TO BUY THIS PHONE(Y/N)?:")
+                        if a4=="y":                    
+                            query_1="insert into orders(transaction_id,product_id,company,phone,price,config,updated) values(%s, %s, %s, %s, %s, %s, %s)"
+                            record=(utils.generate_unique_id(),a1, b1, a2[0][2], a2[0][3], a2[0][4],"no")
+                            c1.execute(query_1,record)
+                            con.commit()
+                            c1.execute("select item_bought from user where user_id=%s",(code,))
+                            val5=c1.fetchall()
+                            lst=list(val5)
+                            record1=lst[0][0]
+                            record1 +=1
+                            query9="update user set item_bought= %s where user_id= %s"
+                            val6=(record1,code)
+                            c1.execute(query9,val6)  
+                            con.commit()
+                            print("PHONE ADDED TO YOUR ACCOUNT")
+                            print("TRANSACTION DONE SUCCESSFULLY")
+                            print("CONGRATULATIONS THE PHONE IS YOURS!")
+                            a6=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")            #NEED TO ADD PRODUCT TO USER DETAILS
+                            if a6=="y":
+                                cont2()
+                            else:   
+                                print("THANK YOU")
+                                print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
+                                print("==============================================================================")
+                                main()
+
+                        else:
+                            a5=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")
+                            if a5=="y":
+                                cont2()                               
+                            else:
+                                print("THANK YOU")
+                                print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
+                                print("==============================================================================")
+                                main()
 
 
-                
                 else:
                     continue
-                    print("NO SUCH SR_NO")
-                    print("TRY AGAIN")
-                    cont2()
+            print("NO SUCH PRODUCT ID")
+            print("TRY AGAIN")
+            cont2()
 
     
         else:
             continue
-            print("SORRY THE GIVEN COMPANY IS NOT IN OUR STORE")
-            a7=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")
-            if a7=="y" or "Y":
-                cont2()
-            else:
-                print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
-                print("==============================================================================")
-                main()
+    print("SORRY THE GIVEN COMPANY IS NOT IN OUR STORE")
+    a7=input("DO YOU WANT TO SEE ANOTHER PHONE(Y/N):")
+    if a7=="y" or "Y":
+        cont2()
+    else:
+        print("Any kind of bulk or small orders of elctronic items contact SSA electronics shop")
+        print("==============================================================================")
+        main()
 
 
                 
@@ -365,10 +366,10 @@ def cont2():
 def order():
     print("WELCOME TO THE SECTION")
     p1=int(input("ENTER THE PRODUCT ID: "))
-    c1.execute("select product_id from orders where product_id=%s",(p1,))
+    c1.execute("select product_id from orders where product_id=%s and updated=%s",(p1,"no"))
     t1=c1.fetchall()
-    u1=list(t1)
-    record2=len(u1)
+    up1=list(t1)
+    record2=len(up1)
     c1.execute("select qty from products where product_id=%s",(p1,))
     record3=c1.fetchall()
     lst1=list(record3)
@@ -377,17 +378,16 @@ def order():
     record5=(record4,p1)
     c1.execute(query10,record5)
     con.commit()
+    print("UPDATED THE PRODUCTS SECTION")
+    query11="update orders set updated=%s where product_id=%s"
+    record6=("yes",p1)
+    c1.execute(query11,record6)
+    con.commit()
+    print("UPDATED THE ORDERS SECTION")
     main()
 
+
     
-
-            
-                    
-                    
-
-
-
-
 def details():
     print("1.USER ACCOUNT")
     print("2.EXIT")
@@ -487,8 +487,8 @@ def cont4():
 
 
 def main():
-    print('WELCOME TO  ')
-    ch=int(input("PRESS 1 TO CONTINUE"))
+    print('WELCOME TO   ')
+    ch=int(input("PRESS 1 TO CONTINUE "))
     if ch==1:
         print('1.SIGN IN')
         print('2.CREATE ACCOUNT')
@@ -506,6 +506,9 @@ def main():
             details()
         else:
             print("INVALID CHOICE!!!")
+
+    else:
+        print("INVALID ENTRY")        
 
 main()
 

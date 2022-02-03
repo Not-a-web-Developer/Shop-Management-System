@@ -1,6 +1,6 @@
 from string import ascii_uppercase, ascii_lowercase, digits
 from random import choice
-from os import system
+from os import system, _exit
 
 def cls():
     system("clear")

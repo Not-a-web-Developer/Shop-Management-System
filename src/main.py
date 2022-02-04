@@ -589,7 +589,7 @@ def cont4():
 
 
 def main():
-    print('Wlcome  to Digital Vision!')                  #SHOP NAME REMAINING
+    print('Wlcome to Digital Vision!') 
     ch=int(input("Press 1 to continue: "))
     if ch==1:
         print("")

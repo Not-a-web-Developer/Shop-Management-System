@@ -1,5 +1,3 @@
-from logging import root
-from multiprocessing.managers import ValueProxy
 import mysql.connector
 import datetime
 import time

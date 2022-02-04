@@ -120,9 +120,7 @@ def create():
         c1.execute("select user_id from user")
         hat=c1.fetchall()
         h2=list(hat)
-        print(h2)
         for i in range(len(h2)):      
-            print(h2[i][0])
             if h2[i][0]==u:
                 print("User ID already taken")
                 o1=input("Do you want to make another user ID? (y/n)?")
